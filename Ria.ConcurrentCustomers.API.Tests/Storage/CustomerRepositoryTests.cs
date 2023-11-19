@@ -1,5 +1,7 @@
-﻿using Ria.ConcurrentCustomers.API.DTOs;
+﻿using NSubstitute;
+using Ria.ConcurrentCustomers.API.DTOs;
 using Ria.ConcurrentCustomers.API.Storage;
+using Ria.ConcurrentCustomers.API.Storage.Text;
 using Shouldly;
 
 namespace Ria.ConcurrentCustomers.API.Tests.Storage
@@ -7,10 +9,17 @@ namespace Ria.ConcurrentCustomers.API.Tests.Storage
     public class CustomerRepositoryTests
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly ITextCustomerStorage _textCustomerStorage;
 
         public CustomerRepositoryTests()
         {
-            _customerRepository = new CustomerRepository();
+            _textCustomerStorage = Substitute.For<ITextCustomerStorage>();
+            _textCustomerStorage
+                .ReadCustomers()
+                .Returns(string.Empty);
+
+            _customerRepository = new CustomerRepository(
+                _textCustomerStorage);
         }
 
         [Fact]

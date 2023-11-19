@@ -1,10 +1,12 @@
 using Ria.ConcurrentCustomers.API.Managers;
 using Ria.ConcurrentCustomers.API.Storage;
+using Ria.ConcurrentCustomers.API.Storage.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<ICustomerManager, CustomerManager>();
+builder.Services.AddSingleton<ITextCustomerStorage, TextCustomerStorage>();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddHttpClient();
 

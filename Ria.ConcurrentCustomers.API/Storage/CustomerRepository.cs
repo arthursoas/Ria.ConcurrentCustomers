@@ -1,4 +1,6 @@
 ﻿using Ria.ConcurrentCustomers.API.DTOs;
+using Ria.ConcurrentCustomers.API.Storage.Text;
+using System.Text.Json;
 
 namespace Ria.ConcurrentCustomers.API.Storage
 {
@@ -7,9 +9,22 @@ namespace Ria.ConcurrentCustomers.API.Storage
         private readonly object _lock = new();
         private readonly List<Customer> _customers;
 
-        public CustomerRepository()
+        private readonly ITextCustomerStorage _textCustomerStorage;
+
+        public CustomerRepository(
+            ITextCustomerStorage textCustomerStorage)
         {
-            _customers = new List<Customer>();
+            _textCustomerStorage = textCustomerStorage;
+
+            try
+            {
+                var customers = _textCustomerStorage.ReadCustomers();
+                _customers = JsonSerializer.Deserialize<List<Customer>>(customers) ?? new List<Customer>();
+            }
+            catch
+            {
+                _customers = new List<Customer>();
+            }
         }
 
         public ICollection<Customer> AddCustomers(ICollection<Customer> customers)
@@ -55,6 +70,7 @@ namespace Ria.ConcurrentCustomers.API.Storage
                     }
 
                     addedCustomers.Add(customer);
+                    _textCustomerStorage.SaveCustomers(_customers);
                 }
 
                 return addedCustomers;

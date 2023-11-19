@@ -2,5 +2,5 @@
 
 var stresser = new Stresser("https://localhost:7005");
 
-await stresser.StressCustomersAPI(1000);
+await stresser.StressCustomersAPI(100);
 Console.ReadKey();

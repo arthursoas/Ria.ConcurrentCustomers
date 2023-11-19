@@ -145,7 +145,7 @@ namespace Ria.ConcurrentCustomer.Stresser
                 Console.WriteLine($"Request Sent to the API: {requests.Count}");
                 Console.WriteLine($"Customers created: {storedCustomers.Count}");
                 Console.WriteLine($"Expected customers to be created: {requests.Count}");
-                Console.WriteLine("\nHave you restated the API to clean previous test data?");
+                Console.WriteLine("\nHave you cleaned data from the previous test?");
             }
 
             Console.WriteLine($"\nEach customer was checked to be sure they were created correctly.");
