@@ -31,7 +31,7 @@ namespace Ria.ConcurrentCustomers.API.Managers
         {
             return
                 customer.AllFieldsPresent() &&
-                customer.Age > 18;
+                customer.Age >= 18;
         }
     }
 }
