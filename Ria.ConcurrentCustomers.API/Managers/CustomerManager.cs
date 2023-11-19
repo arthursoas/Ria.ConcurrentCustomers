@@ -15,18 +15,11 @@ namespace Ria.ConcurrentCustomers.API.Managers
 
         public ICollection<Customer> AddCustomers(ICollection<Customer> customers)
         {
-            var validCustomers = new List<Customer>();
-            foreach (var customer in customers)
-            {
-                if (IsCustomerValid(customer))
-                {
-                    validCustomers.Add(customer);
-                }
-            }
+            var validCustomers = customers
+                .Where(c => IsCustomerValid(c))
+                .ToList();
 
-            _customerRepository.AddCustomers(validCustomers);
-
-            return validCustomers;
+            return _customerRepository.AddCustomers(validCustomers);
         }
 
         public ICollection<Customer> GetCustomers()
@@ -34,20 +27,11 @@ namespace Ria.ConcurrentCustomers.API.Managers
             return _customerRepository.GetCustomers();
         }
 
-        private bool IsCustomerValid(Customer customer)
+        private static bool IsCustomerValid(Customer customer)
         {
-            if (!customer.AllFieldsPresent() || customer.Age < 18)
-            {
-                return false;
-            }
-
-            var storedCustomer = _customerRepository.GetCustomer(customer.Id ?? 0);
-            if (storedCustomer != null)
-            {
-                return false;
-            }
-
-            return true;
+            return
+                customer.AllFieldsPresent() &&
+                customer.Age > 18;
         }
     }
 }

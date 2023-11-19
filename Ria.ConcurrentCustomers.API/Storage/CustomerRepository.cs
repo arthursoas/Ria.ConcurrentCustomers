@@ -12,11 +12,53 @@ namespace Ria.ConcurrentCustomers.API.Storage
             _customers = new List<Customer>();
         }
 
-        public void AddCustomers(ICollection<Customer> customers)
+        public ICollection<Customer> AddCustomers(ICollection<Customer> customers)
         {
+            var addedCustomers = new List<Customer>();
+
             lock (_lock)
             {
-                _customers.AddRange(customers);
+                foreach (var customer in customers)
+                {
+                    // If customer with id is already stored
+                    var added = false;
+                    var storedCustomer = GetCustomer(customer.Id ?? 0);
+                    if (storedCustomer != null)
+                    {
+                        continue;
+                    }
+
+                    // If collection is empty, add first item
+                    if (_customers.Count == 0)
+                    {
+                        _customers.Add(customer);
+                        added = true;
+                    }
+
+                    // If collection has items, check the best position to add item
+                    if (!added) {
+                        for (var index = 0; index < _customers.Count; index++)
+                        {
+                            if (!customer.GraterThan(_customers.ElementAt(index)))
+                            {
+                                var addAtIndex = index - 1 < 0 ? 0 : index - 1;
+                                _customers.Insert(addAtIndex, customer);
+                                added = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // If item is greater than all others in the collection, add it to the end
+                    if (!added)
+                    {
+                        _customers.Add(customer);
+                    }
+
+                    addedCustomers.Add(customer);
+                }
+
+                return addedCustomers;
             }
         }
 
@@ -28,13 +70,10 @@ namespace Ria.ConcurrentCustomers.API.Storage
             }
         }
 
-        public Customer? GetCustomer(int id)
+        private Customer? GetCustomer(int id)
         {
-            lock (_lock)
-            {
-                var customer = _customers.FirstOrDefault(c => c.Id == id);
-                return customer;
-            }
+            var customer = _customers.FirstOrDefault(c => c.Id == id);
+            return customer;
         }
     }
 }

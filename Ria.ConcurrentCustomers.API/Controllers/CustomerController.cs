@@ -18,6 +18,11 @@ namespace Ria.ConcurrentCustomers.API.Controllers
         [HttpPost]
         public ICollection<Customer> CreateCustomers([FromBody] ICollection<Customer> customers)
         {
+            if (customers == null)
+            {
+                throw new ArgumentException("Customers cannot be null. Check the request body.");
+            }
+
             return _customerManager.AddCustomers(customers);
         }
 

@@ -8,19 +8,13 @@ namespace Ria.ConcurrentCustomers.API.Storage
         /// Add a collection of customers to the database ordered by first and last name
         /// </summary>
         /// <param name="customers">Collection of customers</param>
-        void AddCustomers(ICollection<Customer> customers);
+        /// <returns>Collection of added customers</returns>
+        ICollection<Customer> AddCustomers(ICollection<Customer> customers);
 
         /// <summary>
         /// Get all customers from the database
         /// </summary>
         /// <returns>Collection of stored customers</returns>
         ICollection<Customer> GetCustomers();
-
-        /// <summary>
-        /// Get a customer from its id
-        /// </summary>
-        /// <param name="id">Customer id</param>
-        /// <returns>The found customer or null</returns>
-        Customer? GetCustomer(int id);
     }
 }
