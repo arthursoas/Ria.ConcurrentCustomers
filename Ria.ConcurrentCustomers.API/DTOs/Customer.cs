@@ -1,6 +1,6 @@
 ﻿namespace Ria.ConcurrentCustomers.API.DTOs
 {
-    public class Customer
+    public class Customer : IEquatable<Customer>
     {
         public int? Id { get; set; }
 
@@ -20,7 +20,14 @@
             );
         }
 
-        public bool GraterThan(Customer other)
+        public bool Equals(Customer? other)
+        {
+            return
+                FirstName == other?.FirstName &&
+                LastName == other?.LastName;
+        }
+
+        public bool GreaterThan(Customer other)
         {
             var lastNameComparsion = string.Compare(LastName, other.LastName, StringComparison.OrdinalIgnoreCase);
             if (lastNameComparsion != 0)

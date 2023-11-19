@@ -39,10 +39,9 @@ namespace Ria.ConcurrentCustomers.API.Storage
                     if (!added) {
                         for (var index = 0; index < _customers.Count; index++)
                         {
-                            if (!customer.GraterThan(_customers.ElementAt(index)))
+                            if (!customer.GreaterThan(_customers.ElementAt(index)))
                             {
-                                var addAtIndex = index - 1 < 0 ? 0 : index - 1;
-                                _customers.Insert(addAtIndex, customer);
+                                _customers.Insert(index, customer);
                                 added = true;
                                 break;
                             }
