@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ria.ConcurrentCustomers.API", "Ria.ConcurrentCustomers.API\Ria.ConcurrentCustomers.API.csproj", "{57ADA4A7-CC8A-4B71-A602-C66C2A920993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ria.ConcurrentCustomers.API.Tests", "Ria.ConcurrentCustomers.API.Tests\Ria.ConcurrentCustomers.API.Tests.csproj", "{BDC21B39-C239-4963-B993-7957DEF1AA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ria.ConcurrentCustomers.API.Tests", "Ria.ConcurrentCustomers.API.Tests\Ria.ConcurrentCustomers.API.Tests.csproj", "{BDC21B39-C239-4963-B993-7957DEF1AA2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ria.ConcurrentCustomer.Stresser", "Ria.ConcurrentCustomer.LoadTest\Ria.ConcurrentCustomer.Stresser.csproj", "{411F4D89-62EF-48B1-B4E8-84805D5B1043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ria.ConcurrentCustomers.Stresser", "Ria.ConcurrentCustomers.Stresser\Ria.ConcurrentCustomers.Stresser.csproj", "{411F4D89-62EF-48B1-B4E8-84805D5B1043}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
